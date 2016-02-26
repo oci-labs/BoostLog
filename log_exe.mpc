@@ -1,0 +1,5 @@
+project : log_base, log_boost {
+
+  exename = test
+    
+}

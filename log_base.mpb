@@ -1,0 +1,73 @@
+// MPC project.  www.ociweb.com/products/MPC
+//
+// Kevin Heifner heifner@ociweb.com
+
+project : log_boost_base, build_files {
+  exeout = .
+
+  specific (vc9, vc10, vc11, vc12) {
+    // Eliminate warnings about less secure POSIX functions that MS decided to deprecate.
+    macros += _CRT_SECURE_NO_WARNINGS
+    // See if Compiler can convert some of the MS deprecated POSIX calls.
+    macros += _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES
+    // Disable warnings on functions that MS decided are potentially unsafe methods
+    macros += _SCL_SECURE_NO_WARNINGS
+  }
+   
+  specific (vc12) {
+    PlatformToolset = v120
+  }
+  
+  specific (vc10, vc11, vc12) {
+    // To build with the Visual C++ 2010 uncomment:
+    //    PlatformToolset = v100
+
+    // Maximize speed    
+    Release::optimize = MaxSpeed
+
+    // Asynchronous exception handling model (C++ exception handling with
+    // structured exception handling exceptions). /EHa may result in a less
+    // performant image because the compiler will not optimize a catch block
+    // as aggressively, even if the compiler does not see a throw.
+    // 
+    // Allows catch of an exception raised by something other than a throw.
+    // 1 sets the Exception Handling mode to /EHsc
+    // 2 sets the Exception Handling mode to /EHa
+    ExceptionHandling = Async
+
+    // C/C++ -> Code Generation -> Runtime Library = /MD
+    Release::runtime_library = MultiThreadedDLL
+    // C/C++ -> Code Generation -> Runtime Library = /MDd
+    Debug::runtime_library = MultiThreadedDebugDLL
+  }
+
+  specific {
+    // add 'd' for debug exes
+    use_exe_modifier = TRUE
+    wchar_t = FALSE
+    StringPooling = TRUE
+
+    // --
+    warning_level = 4
+    // disable: 'arg': unreferenced formal parameter
+    compile_flags += /wd4100
+    // disable: unreachable code
+    compile_flags += /wd4702
+    // disable: not inlined warning
+    compile_flags += /wd4714    
+    // --
+    
+    // Enable multiprocess compile (available in vc9+)
+    compile_flags += /MP
+
+    // Turn off certain compiler warnings...
+    
+    // 4512 Assignment operator could not be generated
+    compile_flags += /wd4512
+
+    // The /SWAPRUN option tells the operating system to first copy the linker 
+    // output to a swap file, and then run the image from there.
+    // This is to allow executables to be run from a network share.
+    link_options += /SWAPRUN:NET     
+  }
+}

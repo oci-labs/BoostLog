@@ -1,0 +1,13 @@
+// This project file is called log_boost_base to avoid name conflicts with
+// the built-in boost support in MPC.
+
+// The BOOST_ALL_NO_LIB turns off this auto selection the needed
+// static libraries to be specified to the linker manually.  While most 
+// Boost functionality is in the form of templates that do not require
+// static libraries to be linked, there are instances where Boost
+// static libraries are required, e.g. regular expressions and serialization.
+
+project {
+  macros += BOOST_ALL_NO_LIB
+  includes += $(BOOST_ROOT)
+}

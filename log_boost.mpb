@@ -1,0 +1,22 @@
+project : log_boost_base {
+  libpaths += $(BOOST_ROOT)/lib
+  libpaths += $(BOOST_ROOT)/lib64-msvc-12.0
+
+  specific (vc12) {
+    Debug::pure_libs += libboost_system-vc120-mt-gd-1_60.lib
+    Debug::pure_libs += libboost_thread-vc120-mt-gd-1_60.lib
+    Debug::pure_libs += libboost_regex-vc120-mt-gd-1_60.lib
+    Debug::pure_libs += libboost_serialization-vc120-mt-gd-1_60.lib
+    Debug::pure_libs += libboost_filesystem-vc120-mt-gd-1_60.lib
+    Debug::pure_libs += libboost_log_setup-vc120-mt-gd-1_60.lib
+    Debug::pure_libs += libboost_log-vc120-mt-gd-1_60.lib
+    Release::pure_libs += libboost_system-vc120-mt-1_60.lib
+    Release::pure_libs += libboost_thread-vc120-mt-1_60.lib
+    Release::pure_libs += libboost_regex-vc120-mt-1_60.lib
+    Release::pure_libs += libboost_serialization-vc120-mt-1_60.lib
+    Release::pure_libs += libboost_filesystem-vc120-mt-1_60.lib
+    Release::pure_libs += libboost_log_setup-vc120-mt-1_60.lib
+    Release::pure_libs += libboost_log-vc120-mt-1_60.lib
+  }
+
+}
